@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Algeria OpenGov - A Transparent Government Model</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23007A3D'/%3E%3Ctext x='50' y='58' font-size='50' text-anchor='middle' fill='%23fff' font-family='Arial'%3EA%3C/text%3E%3C/svg%3E">
     <style>
         :root {
             --primary-green: #007A3D;
@@ -60,9 +64,31 @@
         .dark-mode .bg-gray-100 {
             background-color: #2d3748;
         }
+        /* Smooth interactions */
+        a, button {
+            transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+            will-change: transform;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(2,6,23,0.08);
+        }
+
+        .btn-smooth:active { transform: translateY(1px); }
+
+        /* Skip link for keyboard users */
+        .skip-link {
+            position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden;
+        }
+        .skip-link:focus {
+            position: fixed; left: 1rem; top: 1rem; width: auto; height: auto; background: white; color: #007A3D; padding: 8px 12px; border-radius: 4px; z-index: 9999; box-shadow: 0 6px 18px rgba(2,6,23,0.12);
+        }
     </style>
 </head>
 <body class="bg-gray-50">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
     <!-- Navigation -->
     <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-4">

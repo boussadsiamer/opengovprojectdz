@@ -150,55 +150,78 @@ document.addEventListener('DOMContentLoaded', function() {
     // Render top provinces into the DOM
     renderTopProvinces();
 
-    // Home page budget chart
-    const budgetCanvas = document.getElementById('budgetChart');
-    if (budgetCanvas && typeof Chart !== 'undefined') {
-        const budgetCtx = budgetCanvas.getContext('2d');
-        new Chart(budgetCtx, {
-            type: 'doughnut',
-            data: budgetData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'right' },
-                    tooltip: { callbacks: { label: function(context) { return `${context.label}: ${context.raw}%`; } } }
-                }
+    // Defer heavy visual initializations until the sections are visible
+    const budgetSection = document.getElementById('budget');
+    const regionsSection = document.getElementById('regions');
+
+    const onEnter = (entries, observer, fn) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                fn();
+                observer.unobserve(entry.target);
             }
         });
+    };
+
+    // Lazy init charts when budget section appears
+    if (budgetSection) {
+        const observer = new IntersectionObserver((entries, obs) => onEnter(entries, obs, initBudgetCharts), { rootMargin: '0px 0px -10% 0px' });
+        observer.observe(budgetSection);
+    } else {
+        // fallback
+        initBudgetCharts();
     }
 
-    // Sector and comparison charts
-    const sectorCanvas = document.getElementById('sectorBudgetChart');
-    const comparisonCanvas = document.getElementById('budgetComparisonChart');
-    if (sectorCanvas && typeof Chart !== 'undefined') {
-        const ctx = sectorCanvas.getContext('2d');
-        new Chart(ctx, { type: 'bar', data: budgetComparisonData, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, title: { display: true, text: 'Budget (Trillion DZD)' } } } } });
-    }
-    if (comparisonCanvas && typeof Chart !== 'undefined') {
-        const ctx2 = comparisonCanvas.getContext('2d');
-        new Chart(ctx2, { type: 'bar', data: budgetComparisonData, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, title: { display: true, text: 'Budget (Trillion DZD)' } } } } });
+    // Lazy init map and regional chart when regions section appears
+    if (regionsSection) {
+        const obs2 = new IntersectionObserver((entries, obs) => onEnter(entries, obs, () => { initAlgeriaMap(); initRegionalChart(); }), { rootMargin: '0px 0px -20% 0px' });
+        obs2.observe(regionsSection);
+    } else {
+        initAlgeriaMap();
+        initRegionalChart();
     }
 
-    // Regional development chart
-    const regionalCanvas = document.getElementById('regionalDevelopmentChart');
-    if (regionalCanvas && typeof Chart !== 'undefined') {
-        const regionalCtx = regionalCanvas.getContext('2d');
-        new Chart(regionalCtx, { type: 'bar', data: regionalDevelopmentData, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 100, title: { display: true, text: 'Development Index' } } } } });
-    }
-
-    // Initialize Algeria map (only if Leaflet is available)
-    if (typeof L !== 'undefined') initAlgeriaMap();
-
-    // Render projects
+    // Render projects (lightweight)
     renderProjects('all');
 
     // Set up event listeners
     setupEventListeners();
 
-    // Initialize scroll animations
+    // Initialize scroll animations (light)
     initScrollAnimations();
 });
+
+// Initialize budget charts (called lazily)
+function initBudgetCharts() {
+    if (typeof Chart === 'undefined') return;
+    // Home doughnut
+    const budgetCanvas = document.getElementById('budgetChart');
+    if (budgetCanvas) {
+        const budgetCtx = budgetCanvas.getContext('2d');
+        new Chart(budgetCtx, { type: 'doughnut', data: budgetData, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' }, tooltip: { callbacks: { label: function(context) { return `${context.label}: ${context.raw}%`; } } } } } });
+    }
+
+    // Sector & comparison
+    const sectorCanvas = document.getElementById('sectorBudgetChart');
+    if (sectorCanvas) {
+        const ctx = sectorCanvas.getContext('2d');
+        new Chart(ctx, { type: 'bar', data: budgetComparisonData, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, title: { display: true, text: 'Budget (Trillion DZD)' } } } } });
+    }
+    const comparisonCanvas = document.getElementById('budgetComparisonChart');
+    if (comparisonCanvas) {
+        const ctx2 = comparisonCanvas.getContext('2d');
+        new Chart(ctx2, { type: 'bar', data: budgetComparisonData, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, title: { display: true, text: 'Budget (Trillion DZD)' } } } } });
+    }
+}
+
+function initRegionalChart() {
+    if (typeof Chart === 'undefined') return;
+    const regionalCanvas = document.getElementById('regionalDevelopmentChart');
+    if (regionalCanvas) {
+        const regionalCtx = regionalCanvas.getContext('2d');
+        new Chart(regionalCtx, { type: 'bar', data: regionalDevelopmentData, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 100, title: { display: true, text: 'Development Index' } } } } });
+    }
+}
 
 // Initialize Algeria map with Leaflet
 function initAlgeriaMap() {
@@ -281,11 +304,19 @@ function renderProjects(filter) {
 
 // Set up event listeners
 function setupEventListeners() {
-    // Mobile menu toggle
+    // Mobile menu toggle + accessibility: ESC to close + click outside
     const mobileMenuButton = document.getElementById('mobileMenuButton');
     const mobileMenu = document.getElementById('mobileMenu');
     if (mobileMenuButton && mobileMenu) {
         mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        // Close on ESC
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') mobileMenu.classList.add('hidden'); });
+        // Click outside to close
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
     }
 
     // Project filter buttons
