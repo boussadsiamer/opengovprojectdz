@@ -198,20 +198,66 @@ function initBudgetCharts() {
     const budgetCanvas = document.getElementById('budgetChart');
     if (budgetCanvas) {
         const budgetCtx = budgetCanvas.getContext('2d');
-        new Chart(budgetCtx, { type: 'doughnut', data: budgetData, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' }, tooltip: { callbacks: { label: function(context) { return `${context.label}: ${context.raw}%`; } } } } } });
+        window.budgetChart = new Chart(budgetCtx, { type: 'doughnut', data: budgetData, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' }, tooltip: { callbacks: { label: function(context) { return `${context.label}: ${context.raw}%`; } } } } } });
     }
 
     // Sector & comparison
     const sectorCanvas = document.getElementById('sectorBudgetChart');
     if (sectorCanvas) {
         const ctx = sectorCanvas.getContext('2d');
-        new Chart(ctx, { type: 'bar', data: budgetComparisonData, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, title: { display: true, text: 'Budget (Trillion DZD)' } } } } });
+        window.sectorChart = new Chart(ctx, { type: 'bar', data: budgetComparisonData, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, title: { display: true, text: 'Budget (Trillion DZD)' } } } } });
     }
     const comparisonCanvas = document.getElementById('budgetComparisonChart');
     if (comparisonCanvas) {
         const ctx2 = comparisonCanvas.getContext('2d');
-        new Chart(ctx2, { type: 'bar', data: budgetComparisonData, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, title: { display: true, text: 'Budget (Trillion DZD)' } } } } });
+        window.comparisonChart = new Chart(ctx2, { type: 'bar', data: budgetComparisonData, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, title: { display: true, text: 'Budget (Trillion DZD)' } } } } });
     }
+}
+
+// Count-up animation helper
+function animateCountUp(el, start, end, decimals = 1, duration = 1200, suffix = '') {
+    if (!el) return;
+    const startTime = performance.now();
+    function step(now) {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const value = start + (end - start) * progress;
+        el.textContent = value.toFixed(decimals) + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+}
+
+// Export budget table to CSV
+function exportBudgetTableToCSV() {
+    const rows = document.querySelectorAll('table.min-w-full tbody tr');
+    if (!rows.length) return;
+    const csv = ['Sector,2023 Budget (DZD),2022 Budget (DZD),Change'];
+    rows.forEach(r => {
+        const cols = r.querySelectorAll('td');
+        const line = Array.from(cols).map(td => '"' + td.textContent.trim().replace(/"/g, '""') + '"').join(',');
+        csv.push(line);
+    });
+    const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'algeria_budget_2023.csv';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+}
+
+// Download chart image helper
+function downloadChartImage(chart, filename) {
+    if (!chart || !chart.toBase64Image) return;
+    const url = chart.toBase64Image();
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
 }
 
 function initRegionalChart() {
@@ -406,6 +452,32 @@ function setupEventListeners() {
             }
 
             feedbackForm.reset();
+        });
+    }
+
+    // CSV export button
+    const exportCsvBtn = document.getElementById('exportBudgetCsvBtn');
+    if (exportCsvBtn) exportCsvBtn.addEventListener('click', exportBudgetTableToCSV);
+
+    // Chart download buttons
+    const downloadBudgetBtn = document.getElementById('downloadBudgetChartBtn');
+    if (downloadBudgetBtn) downloadBudgetBtn.addEventListener('click', () => downloadChartImage(window.budgetChart, 'budget_doughnut.png'));
+    const downloadSectorBtn = document.getElementById('downloadSectorChartBtn');
+    if (downloadSectorBtn) downloadSectorBtn.addEventListener('click', () => downloadChartImage(window.sectorChart, 'sector_bars.png'));
+    const downloadComparisonBtn = document.getElementById('downloadComparisonChartBtn');
+    if (downloadComparisonBtn) downloadComparisonBtn.addEventListener('click', () => downloadChartImage(window.comparisonChart, 'comparison_bars.png'));
+
+    // Project search input (debounced)
+    const projectSearch = document.getElementById('projectSearch');
+    if (projectSearch) {
+        let debounceTimer = null;
+        projectSearch.addEventListener('input', (e) => {
+            const q = e.target.value.trim().toLowerCase();
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                const filtered = projectsData.filter(p => (p.title + ' ' + p.region + ' ' + p.description).toLowerCase().includes(q));
+                renderProjects(filtered);
+            }, 200);
         });
     }
 }

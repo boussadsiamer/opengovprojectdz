@@ -160,7 +160,7 @@
                             </svg>
                         </div>
                     </div>
-                    <p class="text-3xl font-bold text-green-700">12.8 T DZD</p>
+                    <p id="totalBudgetLabel" class="text-3xl font-bold text-green-700">12.8 T DZD</p>
                     <p class="text-gray-500 mt-2">Fiscal Year 2023</p>
                 </div>
                 
@@ -176,15 +176,15 @@
                     <ul class="space-y-2">
                         <li class="flex justify-between">
                             <span class="text-gray-600">Education</span>
-                            <span class="font-medium">18.2%</span>
+                            <span class="font-medium sector-percentage">18.2%</span>
                         </li>
                         <li class="flex justify-between">
                             <span class="text-gray-600">Healthcare</span>
-                            <span class="font-medium">15.7%</span>
+                            <span class="font-medium sector-percentage">15.7%</span>
                         </li>
                         <li class="flex justify-between">
                             <span class="text-gray-600">Infrastructure</span>
-                            <span class="font-medium">12.4%</span>
+                            <span class="font-medium sector-percentage">12.4%</span>
                         </li>
                     </ul>
                 </div>
@@ -205,6 +205,11 @@
             
             <div class="bg-white rounded-xl shadow-md p-6 fade-in">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6">Budget Distribution by Sector</h2>
+                <div class="flex items-center justify-end gap-3 mb-4">
+                    <button id="downloadBudgetChartBtn" class="btn-smooth bg-white border border-gray-200 text-gray-700 px-3 py-1 rounded">Download Chart</button>
+                    <button id="downloadSectorChartBtn" class="btn-smooth bg-white border border-gray-200 text-gray-700 px-3 py-1 rounded">Download Sector Chart</button>
+                    <button id="downloadComparisonChartBtn" class="btn-smooth bg-white border border-gray-200 text-gray-700 px-3 py-1 rounded">Download Comparison Chart</button>
+                </div>
                 <div class="h-80">
                     <canvas id="budgetChart"></canvas>
                 </div>
@@ -236,7 +241,12 @@
             </div>
             
             <div class="mt-8 bg-white rounded-xl shadow-md p-6 fade-in">
-                <h3 class="text-xl font-bold text-gray-800 mb-4">Detailed Budget Breakdown</h3>
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold text-gray-800">Detailed Budget Breakdown</h3>
+                    <div class="flex items-center gap-3">
+                        <button id="exportBudgetCsvBtn" class="btn-smooth bg-green-700 text-white px-3 py-1 rounded">Export CSV</button>
+                    </div>
+                </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead>
@@ -349,6 +359,9 @@
             </div>
             
             <div class="flex flex-wrap justify-center gap-4 mb-8 fade-in">
+                <div class="w-full flex justify-center mb-2">
+                    <input id="projectSearch" type="search" placeholder="Search projects..." class="w-full max-w-xl px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
+                </div>
                 <button class="filter-btn active bg-green-700 text-white px-4 py-2 rounded-lg font-medium" data-filter="all">All Projects</button>
                 <button class="filter-btn bg-white text-green-700 border border-green-700 px-4 py-2 rounded-lg font-medium hover:bg-green-50" data-filter="planned">Planned</button>
                 <button class="filter-btn bg-white text-green-700 border border-green-700 px-4 py-2 rounded-lg font-medium hover:bg-green-50" data-filter="ongoing">Ongoing</button>
