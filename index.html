@@ -18,72 +18,68 @@
             --primary-green: #007A3D;
             --accent-gold: #FFD700;
             --text-dark: #222222;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --muted: #6b7280;
         }
-        
+
+        /* Dark theme variables applied via [data-theme="dark"] on <html> */
+        [data-theme="dark"] {
+            --bg: #0f1724;
+            --card-bg: #1f2937;
+            --text-dark: #e6eef8;
+            --muted: #9ca3af;
+        }
+
         body {
             font-family: 'Roboto', sans-serif;
             color: var(--text-dark);
+            background-color: var(--bg);
+            transition: background-color .25s ease, color .25s ease;
         }
-        
+
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Poppins', sans-serif;
         }
-        
+
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.5s ease, transform 0.5s ease;
         }
-        
+
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
         }
-        
-        .dark-mode {
-            background-color: #1a202c;
-            color: #e2e8f0;
+
+        /* Make commonly themed utility classes smoothly transition */
+        .bg-white, .bg-gray-50, .bg-gray-100, .border-gray-200, .text-gray-700, .text-gray-600 {
+            transition: background-color .25s ease, color .25s ease, border-color .25s ease;
         }
-        
-        .dark-mode .bg-white {
-            background-color: #2d3748;
-        }
-        
-        .dark-mode .text-gray-700 {
-            color: #e2e8f0;
-        }
-        
-        .dark-mode .text-gray-600 {
-            color: #cbd5e0;
-        }
-        
-        .dark-mode .border-gray-200 {
-            border-color: #4a5568;
-        }
-        
-        .dark-mode .bg-gray-100 {
-            background-color: #2d3748;
-        }
+
+        /* Map theme-sensitive Tailwind utility fallbacks */
+        .bg-white { background-color: var(--card-bg) !important; }
+        .bg-gray-50 { background-color: var(--bg) !important; }
+        .text-gray-700 { color: var(--text-dark) !important; }
+        .text-gray-600 { color: var(--muted) !important; }
+        .border-gray-200 { border-color: rgba(148,163,184,.18) !important; }
+
         /* Smooth interactions */
-        a, button {
-            transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
-            will-change: transform;
-        }
+        a, button { transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease; will-change: transform; }
 
-        .card-hover:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 30px rgba(2,6,23,0.08);
-        }
-
+        .card-hover:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(2,6,23,0.08); }
         .btn-smooth:active { transform: translateY(1px); }
 
+        /* Theme toggle icons visibility */
+        .icon-sun { display: inline-block; }
+        .icon-moon { display: none; }
+        [data-theme="dark"] .icon-sun { display: none; }
+        [data-theme="dark"] .icon-moon { display: inline-block; }
+
         /* Skip link for keyboard users */
-        .skip-link {
-            position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden;
-        }
-        .skip-link:focus {
-            position: fixed; left: 1rem; top: 1rem; width: auto; height: auto; background: white; color: #007A3D; padding: 8px 12px; border-radius: 4px; z-index: 9999; box-shadow: 0 6px 18px rgba(2,6,23,0.12);
-        }
+        .skip-link { position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+        .skip-link:focus { position: fixed; left: 1rem; top: 1rem; width: auto; height: auto; background: white; color: #007A3D; padding: 8px 12px; border-radius: 4px; z-index: 9999; box-shadow: 0 6px 18px rgba(2,6,23,0.12); }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -108,8 +104,14 @@
                 </div>
                 
                 <div class="flex items-center space-x-4">
-                    <button id="darkModeToggle" aria-label="Toggle dark mode" class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button id="darkModeToggle" aria-label="Toggle theme" aria-pressed="false" class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
+                        <span class="sr-only">Toggle theme</span>
+                        <!-- Sun icon (light mode) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon-sun h-5 w-5 text-gray-700" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <!-- Moon icon (dark mode) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon-moon h-5 w-5 text-gray-700" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                         </svg>
                     </button>
