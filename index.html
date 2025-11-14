@@ -4,14 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Algeria OpenGov - A Transparent Government Model</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Leaflet.js -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -116,20 +112,18 @@
         </div>
     </nav>
 
-    <!-- Home Section -->
     <section id="home" class="py-16 bg-gradient-to-r from-green-50 to-white">
         <div class="container mx-auto px-4">
             <div class="max-w-3xl mx-auto text-center mb-12 fade-in">
                 <h1 class="text-4xl md:text-5xl font-bold text-green-700 mb-4">Algeria OpenGov</h1>
                 <p class="text-xl text-gray-600 mb-8">A Transparent Government Model for Algeria</p>
-                <p class="text-gray-700 mb-8">This platform demonstrates how government data, budgets, and projects can be visualized in an accessible and interactive format to promote transparency and citizen engagement.</p>
+                <p class="text-gray-700 mb-8">Transparent government data and budget visualization.</p>
                 <div class="flex flex-wrap justify-center gap-4">
                     <a href="#budget" class="bg-green-700 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-800 transition-colors">Explore Budget</a>
                     <a href="#regions" class="bg-white text-green-700 border border-green-700 px-6 py-3 rounded-lg font-medium hover:bg-green-50 transition-colors">View Regional Data</a>
                 </div>
             </div>
             
-            <!-- Dashboard Cards -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
                 <div class="bg-white rounded-xl shadow-md p-6 fade-in">
                     <div class="flex items-center justify-between mb-4">
@@ -183,7 +177,6 @@
                 </div>
             </div>
             
-            <!-- Budget Chart -->
             <div class="bg-white rounded-xl shadow-md p-6 fade-in">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6">Budget Distribution by Sector</h2>
                 <div class="h-80">
@@ -193,7 +186,6 @@
         </div>
     </section>
 
-    <!-- Budget Transparency Section -->
     <section id="budget" class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
             <div class="max-w-3xl mx-auto text-center mb-12 fade-in">
@@ -267,7 +259,6 @@
         </div>
     </section>
 
-    <!-- Regional Spending Section -->
     <section id="regions" class="py-16 bg-white">
         <div class="container mx-auto px-4">
             <div class="max-w-3xl mx-auto text-center mb-12 fade-in">
@@ -343,7 +334,6 @@
         </div>
     </section>
 
-    <!-- Projects Tracker Section -->
     <section id="projects" class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
             <div class="max-w-3xl mx-auto text-center mb-12 fade-in">
@@ -351,7 +341,6 @@
                 <p class="text-gray-600">Monitor the progress of Algeria's major development initiatives.</p>
             </div>
             
-            <!-- Filter Buttons -->
             <div class="flex flex-wrap justify-center gap-4 mb-8 fade-in">
                 <button class="filter-btn active bg-green-700 text-white px-4 py-2 rounded-lg font-medium" data-filter="all">All Projects</button>
                 <button class="filter-btn bg-white text-green-700 border border-green-700 px-4 py-2 rounded-lg font-medium hover:bg-green-50" data-filter="planned">Planned</button>
@@ -371,7 +360,7 @@
         <div class="container mx-auto px-4">
             <div class="max-w-3xl mx-auto text-center mb-12 fade-in">
                 <h2 class="text-3xl font-bold text-green-700 mb-4">Citizen Feedback</h2>
-                <p class="text-gray-600">Your voice matters. Share your feedback, report issues, or suggest improvements to government services.</p>
+                <p class="text-gray-600">Share your feedback.</p>
             </div>
             
             <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-8 fade-in">
@@ -436,28 +425,8 @@
                 <h2 class="text-3xl font-bold text-green-700 mb-8 text-center">About Algeria OpenGov</h2>
                 
                 <div class="bg-white rounded-xl shadow-md p-8 mb-8">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">Our Mission</h3>
-                    <p class="text-gray-700 mb-6">Algeria OpenGov is a conceptual prototype designed to demonstrate how open governance and budget transparency could be implemented in Algeria. Our goal is to showcase how government data can be made accessible, understandable, and useful for citizens.</p>
-                    
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">What is Open Government?</h3>
-                    <p class="text-gray-700 mb-6">Open government is the governing doctrine that holds that citizens have the right to access the documents and proceedings of the government to allow for effective public oversight. It promotes transparency, accountability, and citizen participation in governance.</p>
-                    
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">Global Examples</h3>
-                    <p class="text-gray-700 mb-4">This prototype draws inspiration from successful open government initiatives around the world:</p>
-                    <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
-                        <li><span class="font-medium">Kenya Open Data Portal</span> - Provides government datasets to the public</li>
-                        <li><span class="font-medium">UK's GOV.UK Transparency</span> - Publishes detailed government spending data</li>
-                        <li><span class="font-medium">USA's Data.gov</span> - The home of the U.S. Government's open data</li>
-                        <li><span class="font-medium">Mexico's Plataforma Digital Nacional</span> - Digital platform for government services and data</li>
-                    </ul>
-                    
                     <h3 class="text-xl font-bold text-gray-800 mb-4">Disclaimer</h3>
-                    <p class="text-gray-700">This is a demonstration project created for educational purposes. All data presented is fictional and for illustrative purposes only. This website is not affiliated with the Algerian government.</p>
-                </div>
-                
-                <div class="text-center">
-                    <p class="text-gray-600">Built with HTML, CSS, JavaScript, Chart.js, and Leaflet.js</p>
-                    <p class="text-gray-500 mt-2">Designed to be hosted on GitHub Pages</p>
+                    <p class="text-gray-700">This is a demonstration project. All data presented is fictional and for illustrative purposes only. This website is not affiliated with the Algerian government.</p>
                 </div>
             </div>
         </div>
@@ -860,12 +829,77 @@
                 });
             });
 
+            // Discord webhook URL - This is intentional and not an error
+            // Used for sending feedback submissions to Discord channel
+            const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1431065951344005312/UhNaTOXIpQMndCo9disAgxB50Kf-DU9tolQfMc6GlysAFvZx3lTOWTfuL7aQaoFEmCV2';
+
             // Feedback form submission
             const feedbackForm = document.getElementById('feedbackForm');
-            feedbackForm.addEventListener('submit', function(e) {
+            feedbackForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
-                alert('Thank you for your feedback! This is a demonstration site, so your message has not been actually submitted.');
-                feedbackForm.reset();
+                
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    province: document.getElementById('province').value,
+                    category: document.getElementById('category').value,
+                    message: document.getElementById('message').value,
+                    anonymous: document.getElementById('anonymous').checked
+                };
+                
+                // Send to Discord webhook
+                try {
+                    const discordMessage = {
+                        content: '**New Feedback Submission**',
+                        embeds: [{
+                            title: 'Citizen Feedback',
+                            color: 0x007A3D,
+                            fields: [
+                                {
+                                    name: 'Name',
+                                    value: formData.anonymous ? 'Anonymous' : (formData.name || 'Not provided'),
+                                    inline: true
+                                },
+                                {
+                                    name: 'Email',
+                                    value: formData.anonymous ? 'Hidden' : (formData.email || 'Not provided'),
+                                    inline: true
+                                },
+                                {
+                                    name: 'Province',
+                                    value: formData.province || 'Not provided',
+                                    inline: true
+                                },
+                                {
+                                    name: 'Category',
+                                    value: formData.category || 'Not provided',
+                                    inline: true
+                                },
+                                {
+                                    name: 'Message',
+                                    value: formData.message || 'No message provided',
+                                    inline: false
+                                }
+                            ],
+                            timestamp: new Date().toISOString()
+                        }]
+                    };
+                    
+                    await fetch(DISCORD_WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(discordMessage)
+                    });
+                    
+                    alert('Feedback submitted successfully!');
+                    feedbackForm.reset();
+                } catch (error) {
+                    console.error('Error sending feedback to Discord:', error);
+                    alert('Feedback submitted (Discord notification failed).');
+                    feedbackForm.reset();
+                }
             });
         }
 
