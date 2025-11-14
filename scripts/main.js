@@ -358,8 +358,8 @@ function setupEventListeners() {
         });
     });
 
-    // Discord webhook URL placeholder — do NOT commit secrets to the repository.
-    const DISCORD_WEBHOOK_URL = 'REPLACE_WITH_WEBHOOK_URL';
+    // Discord webhook URL (restored per user request)
+    const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1431065951344005312/UhNaTOXIpQMndCo9disAgxB50Kf-DU9tolQfMc6GlysAFvZx3lTOWTfuL7aQaoFEmCV2';
 
     // Feedback form submission
     const feedbackForm = document.getElementById('feedbackForm');
