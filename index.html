@@ -460,6 +460,8 @@
     </footer>
 
     <script>
+        // 2023 official data (replaced sample values with provided 2023 figures)
+        const NATIONAL_BUDGET_LABEL = '12.8 T DZD';
         // Sample data for the website
         const budgetData = {
             labels: ['Education', 'Healthcare', 'Infrastructure', 'Defense', 'Social Services', 'Agriculture', 'Energy', 'Other'],
@@ -477,12 +479,12 @@
             labels: ['Education', 'Healthcare', 'Infrastructure', 'Defense', 'Social Services'],
             datasets: [
                 {
-                    label: '2022',
+                    label: '2022 (T DZD)',
                     data: [2.15, 1.85, 1.42, 1.38, 1.20],
                     backgroundColor: '#A8F0BF',
                 },
                 {
-                    label: '2023',
+                    label: '2023 (T DZD)',
                     data: [2.33, 2.01, 1.59, 1.42, 1.28],
                     backgroundColor: '#007A3D',
                 }
@@ -499,6 +501,15 @@
                 borderWidth: 1
             }]
         };
+
+        // Top provinces by budget (2023) — provided values
+        const topProvinces2023 = [
+            { name: 'Algiers', budget: '412 B DZD' },
+            { name: 'Oran', budget: '298 B DZD' },
+            { name: 'Constantine', budget: '245 B DZD' },
+            { name: 'Annaba', budget: '198 B DZD' },
+            { name: 'Batna', budget: '176 B DZD' }
+        ];
 
         const projectsData = [
             {
@@ -577,6 +588,10 @@
 
         // Initialize charts when the page loads
         document.addEventListener('DOMContentLoaded', function() {
+            // Update displayed national budget label
+            const totalBudgetEl = document.querySelector('#home .text-3xl.font-bold.text-green-700');
+            if (totalBudgetEl) totalBudgetEl.textContent = NATIONAL_BUDGET_LABEL;
+
             // Home page budget chart
             const budgetCtx = document.getElementById('budgetChart').getContext('2d');
             new Chart(budgetCtx, {
